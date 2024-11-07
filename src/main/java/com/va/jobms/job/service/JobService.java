@@ -1,6 +1,7 @@
 package com.va.jobms.job.service;
 
 
+import com.va.jobms.job.dto.JobWithCompanyDTO;
 import com.va.jobms.job.model.Job;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +11,7 @@ import java.util.Optional;
 @Service
 public interface JobService {
 
-    List<Job> findAll();
+    List<JobWithCompanyDTO> findAll();
 
     Optional<Job> findById(Long id);
 
