@@ -8,12 +8,7 @@ import com.va.jobms.job.external.Review;
 import com.va.jobms.job.mapper.JobMapper;
 import com.va.jobms.job.model.Job;
 import com.va.jobms.job.repository.JobRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,12 +17,8 @@ import java.util.Optional;
 public class JobServiceImpl implements JobService {
 
     private final JobRepository jobRepository;
-
-//    @Autowired
-//    RestTemplate restTemplate = new RestTemplate();
-
     private final CompanyClient companyClient;
-    private ReviewClient reviewClient;
+    private final ReviewClient reviewClient;
 
     public JobServiceImpl(JobRepository jobRepository, CompanyClient companyClient, ReviewClient reviewClient) {
         this.jobRepository = jobRepository;
@@ -42,18 +33,8 @@ public class JobServiceImpl implements JobService {
     }
 
     public JobDTO convertToDto(Job job) {
-        // Company company = restTemplate.getForObject("http://localhost:8081/companies/" + job.getCompanyId(), Company.class);
-        // Company company = restTemplate.getForObject("http://COMPANY-SERVICE:8081/companies/" + job.getCompanyId(), Company.class);
+
         Company company = companyClient.getCompany(job.getCompanyId());
-
-//        ResponseEntity<List<Review>> reviewResponse = restTemplate.exchange(
-//                "http://REVIEW-SERVICE:8083/reviews?companyId=" + job.getCompanyId(),
-//                HttpMethod.GET,
-//                null,
-//                new ParameterizedTypeReference<List<Review>>() {
-//                });
-//        List<Review> reviews = reviewResponse.getBody();
-
         List<Review> reviews = reviewClient.getReviews(job.getCompanyId());
 
         JobDTO jobDTO = JobMapper.mapToJobWithCompanyDTO(job, company, reviews);
