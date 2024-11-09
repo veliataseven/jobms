@@ -1,7 +1,7 @@
 package com.va.jobms.job.service;
 
 
-import com.va.jobms.job.dto.JobWithCompanyDTO;
+import com.va.jobms.job.dto.JobDTO;
 import com.va.jobms.job.model.Job;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +11,9 @@ import java.util.Optional;
 @Service
 public interface JobService {
 
-    List<JobWithCompanyDTO> findAll();
+    List<JobDTO> findAll();
 
-    Optional<Job> findById(Long id);
+    Optional<JobDTO> findById(Long id);
 
     Job createJob(Job job);
 

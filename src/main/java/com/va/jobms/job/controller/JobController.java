@@ -1,6 +1,6 @@
 package com.va.jobms.job.controller;
 
-import com.va.jobms.job.dto.JobWithCompanyDTO;
+import com.va.jobms.job.dto.JobDTO;
 import com.va.jobms.job.model.Job;
 import com.va.jobms.job.service.JobService;
 import org.springframework.http.ResponseEntity;
@@ -19,14 +19,14 @@ public class JobController {
     }
 
     @GetMapping("/jobs")
-    public ResponseEntity<List<JobWithCompanyDTO>> getJobs() {
-        List<JobWithCompanyDTO> jobs = jobService.findAll();
+    public ResponseEntity<List<JobDTO>> getJobs() {
+        List<JobDTO> jobs = jobService.findAll();
         return ResponseEntity.ok(jobs);
     }
 
     @GetMapping("/jobs/{id}")
-    public ResponseEntity<Job> getJob(@PathVariable Long id) {
-        Optional<Job> job = jobService.findById(id);
+    public ResponseEntity<JobDTO> getJob(@PathVariable Long id) {
+        Optional<JobDTO> job = jobService.findById(id);
         return job.map(ResponseEntity::ok).orElseThrow(() -> new IllegalArgumentException("Job not found"));
     }
 
